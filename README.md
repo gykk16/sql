@@ -1,2 +1,2 @@
 # sql
-sql
+SQL 연습
