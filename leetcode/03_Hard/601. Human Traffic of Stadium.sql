@@ -52,22 +52,21 @@
 -- The rows with ids 2 and 3 are not included because we need at least three consecutive ids.
 
 
-
-SELECT S1.ID AS "ID"
-       ,TO_CHAR(S1.VISIT_DATE, 'YYYY-MM-DD') AS "VISIT_DATE"
-       ,S1.PEOPLE AS "PEOPLE"
+SELECT S1.ID                                AS "ID"
+     , TO_CHAR(S1.VISIT_DATE, 'YYYY-MM-DD') AS "VISIT_DATE"
+     , S1.PEOPLE                            AS "PEOPLE"
   FROM STADIUM S1
-      ,STADIUM S2
-      ,STADIUM S3
+     , STADIUM S2
+     , STADIUM S3
  WHERE (
-       (S1.ID = S2.ID + 1 AND S1.ID = S3.ID + 2) 
-       OR (S2.ID = S3.ID + 1 AND S2.ID = S1.ID + 2) 
-       OR (S3.ID = S1.ID + 1 AND S3.ID = S2.ID + 2)
-       )
-       AND S1.PEOPLE >= 100
-       AND S2.PEOPLE >= 100
-       AND S3.PEOPLE >= 100
+         (S1.ID = S2.ID + 1 AND S1.ID = S3.ID + 2)
+         OR (S2.ID = S3.ID + 1 AND S2.ID = S1.ID + 2)
+         OR (S3.ID = S1.ID + 1 AND S3.ID = S2.ID + 2)
+     )
+   AND S1.PEOPLE >= 100
+   AND S2.PEOPLE >= 100
+   AND S3.PEOPLE >= 100
  GROUP BY S1.ID
-         ,TO_CHAR(S1.VISIT_DATE, 'YYYY-MM-DD')
-         ,S1.PEOPLE
+        , TO_CHAR(S1.VISIT_DATE, 'YYYY-MM-DD')
+        , S1.PEOPLE
  ORDER BY S1.ID;
