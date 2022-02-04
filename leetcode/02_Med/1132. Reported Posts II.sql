@@ -71,3 +71,15 @@
 -- The percentage for 2019-07-02 is 100% because one post was reported as spam and it was removed.
 -- The other days had no spam reports so the average is (50 + 100) / 2 = 75%
 -- Note that the output is only one number and that we do not care about the remove dates.
+
+
+
+SELECT ROUND(AVG(PCNT), 2) AS AVERAGE_DAILY_PERCENT
+  FROM (SELECT (COUNT(DISTINCT R.POST_ID) * 100 / COUNT(DISTINCT A.POST_ID)) PCNT
+              ,ACTION_DATE
+          FROM ACTIONS  A
+              ,REMOVALS R
+         WHERE A.POST_ID = R.POST_ID(+)
+               AND EXTRA = 'spam'
+         GROUP BY ACTION_DATE) TAB_A;
+         
